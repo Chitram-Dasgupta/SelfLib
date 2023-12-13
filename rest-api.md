@@ -82,3 +82,9 @@ spring.jpa.hibernate.ddl-auto=update
    Most of the time, the service layer methods will be simple pass-through
    methods for the repository methods; at other times we will have to
    write methods in the repository interface, as well.
+
+# To be done
+
+## `TODO` Add validation to the resource instances
+
+## `TODO` Return the index response sorted by id

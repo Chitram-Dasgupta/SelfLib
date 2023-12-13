@@ -5,9 +5,10 @@ and add the following dependencies:
 
 1. Lombok
 2. Spring Data DPA
-3. PostgresSQL driver
-4. Spring Web
-5. Spring DevTools
+3. Validation
+4. PostgresSQL driver
+5. Spring Web
+6. Spring DevTools
 
 # Set up the database connection
 
@@ -37,3 +38,24 @@ spring.jpa.hibernate.ddl-auto=update
 4. **PUT** `/books/{isbn}` updates all the attributes of a book
 5. **PATCH** `/books/{isbn}` updates some of the attributes of a book
 6. **DELETE** `/books/{isbn}` deletes a book
+
+# Setting up the database interaction for authors
+
+1. Create an author `entity`
+
+   Add the table name, the attribute names, and their setters and getters,
+   and the validations.
+
+2. Create the author `repository`
+
+   Extend the repository interface with the appropriate functionality
+
+3. Create the author `DTO`
+
+   The author DTO will be a plain Java class.
+
+4. Create the `ModelMapper`
+
+   The ModelMapper bean will between the author entity and author DTO
+
+5. Create an interface for the mapper and implement it for the author

@@ -60,7 +60,7 @@ public class AuthorController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<AuthorDto> partialUpdateAuthor(@PathVariable("id") Long id,@Valid @RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> partialUpdateAuthor(@PathVariable("id") Long id, @Valid @RequestBody AuthorDto authorDto) {
         if (!authorService.exists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

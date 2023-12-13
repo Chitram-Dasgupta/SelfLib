@@ -4,6 +4,7 @@ import com.example.SelfLib.domain.dto.AuthorDto;
 import com.example.SelfLib.domain.entities.AuthorEntity;
 import com.example.SelfLib.mappers.EntityDtoMapper;
 import com.example.SelfLib.services.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +41,10 @@ public class AuthorController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
+    public ResponseEntity<AuthorDto> createAuthor(@Valid @RequestBody AuthorDto authorDto) {
         AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
         AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
-
-        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(authorEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(savedAuthorEntity), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

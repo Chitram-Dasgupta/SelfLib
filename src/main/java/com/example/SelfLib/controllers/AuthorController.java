@@ -2,14 +2,13 @@ package com.example.SelfLib.controllers;
 
 import com.example.SelfLib.domain.dto.AuthorDto;
 import com.example.SelfLib.domain.entities.AuthorEntity;
-import com.example.SelfLib.mappers.Mapper;
+import com.example.SelfLib.mappers.EntityDtoMapper;
 import com.example.SelfLib.services.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -17,17 +16,17 @@ import java.util.stream.Collectors;
 @RequestMapping("authors")
 public class AuthorController {
     private final AuthorService authorService;
-    private final Mapper<AuthorEntity, AuthorDto> authorMapper;
+    private final EntityDtoMapper entityDtoMapper;
 
-    public AuthorController(AuthorService authorService, Mapper<AuthorEntity, AuthorDto> authorMapper) {
+    public AuthorController(AuthorService authorService, EntityDtoMapper entityDtoMapper) {
         this.authorService = authorService;
-        this.authorMapper = authorMapper;
+        this.entityDtoMapper = entityDtoMapper;
     }
 
     @GetMapping("/")
     public List<AuthorDto> listAuthors() {
         List<AuthorEntity> authors = authorService.findAll();
-        return authors.stream().map(authorMapper::mapTo).collect(Collectors.toList());
+        return authors.stream().map(entityDtoMapper::authorEntityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -35,17 +34,17 @@ public class AuthorController {
         Optional<AuthorEntity> foundAuthor = authorService.findOne(id);
 
         return foundAuthor.map(authorEntity -> {
-            AuthorDto authorDto = authorMapper.mapTo(authorEntity);
+            AuthorDto authorDto = entityDtoMapper.authorEntityToDto(authorEntity);
             return new ResponseEntity<>(authorDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody AuthorDto authorDto) {
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
         AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
 
-        return new ResponseEntity<>(authorMapper.mapTo(authorEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(authorEntity), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -54,10 +53,10 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
         AuthorEntity updatedAuthorEntity = authorService.save(authorEntity);
 
-        return new ResponseEntity<>(authorMapper.mapTo(authorEntity), HttpStatus.OK);
+        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -66,10 +65,10 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
         authorEntity.setId(id);
         AuthorEntity updatedAuthorEntity = authorService.partialUpdate(authorEntity);
-        return new ResponseEntity<>(authorMapper.mapTo(updatedAuthorEntity), HttpStatus.OK);
+        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

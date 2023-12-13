@@ -19,3 +19,21 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 
 spring.jpa.hibernate.ddl-auto=update
 ```
+
+# API documentation
+
+## Authors resource
+1. **POST** `/authors` creates an author
+2. **GET** `/authors/{id}` fetches an author
+3. **GET** `/authors` fetches a collection of authors
+4. **PUT** `/authors/{id}` updates all the attributes of an author
+5. **PATCH** `/authors/{id}` updates some of the attributes of an author
+6. **DELETE** `/authors/{id}` deletes an author
+
+## Books resource
+1. **PUT** `/books/{isbn}` creates a book by passing in the *ISBN*
+2. **GET** `/books/{isbn}` fetches a book
+3. **GET** `/books` fetches a collection of books
+4. **PUT** `/books/{isbn}` updates all the attributes of a book
+5. **PATCH** `/books/{isbn}` updates some of the attributes of a book
+6. **DELETE** `/books/{isbn}` deletes a book

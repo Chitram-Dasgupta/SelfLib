@@ -59,3 +59,26 @@ spring.jpa.hibernate.ddl-auto=update
    The ModelMapper bean will between the author entity and author DTO
 
 5. Create an interface for the mapper and implement it for the author
+
+# Laying up the groundwork for the presentation layer: controllers
+
+1. Create an author `service interface`
+
+   This interface will have the methods that we want to use from the
+   controller
+
+2. Implement the author interface
+
+   This will flesh out the methods declared in the interface
+
+3. Create the AuthorController class annotated with `@RestController`
+
+# The workflow for creating the API
+
+1. Define the API endpoints in the controller and use the methods (not yet
+   defined) from the service interface.
+2. Declare the methods in the service layer interface
+3. Actually implement them in the service layer concrete class.
+   Most of the time, the service layer methods will be simple pass-through
+   methods for the repository methods; at other times we will have to
+   write methods in the repository interface, as well.

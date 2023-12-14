@@ -83,8 +83,19 @@ spring.jpa.hibernate.ddl-auto=update
    methods for the repository methods; at other times we will have to
    write methods in the repository interface, as well.
 
+**NOTE:** We can have multiple classes handling separate endpoints for the same
+resource.
+
 # To be done
 
 ## `TODO` Add validation to the resource instances
 
 ## `TODO` Return the index response sorted by id
+
+## `TODO` See if it is a good idea to rename the entities
+
+## `TODO` Find out how to deal with nested resources
+
+# Resources
+
+1. https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design

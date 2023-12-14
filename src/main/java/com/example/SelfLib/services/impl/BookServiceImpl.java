@@ -1,7 +1,6 @@
 package com.example.SelfLib.services.impl;
 
 import com.example.SelfLib.domain.entities.BookEntity;
-import com.example.SelfLib.repositories.AuthorRepository;
 import com.example.SelfLib.repositories.BookRepository;
 import com.example.SelfLib.services.BookService;
 import org.springframework.stereotype.Service;
@@ -29,5 +28,18 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<BookEntity> findOne(String isbn) {
         return bookRepository.findById(isbn);
+    }
+
+    @Override
+    public boolean exists(String isbn) {
+        return bookRepository.existsById(isbn);
+    }
+
+    @Override
+    public BookEntity partialUpdate(BookEntity bookEntity) {
+        return bookRepository.findById(bookEntity.getIsbn()).map(book -> {
+            Optional.ofNullable(bookEntity.getName()).ifPresent(book::setName);
+            return bookRepository.save(book);
+        }).orElseThrow(() -> new RuntimeException("Book does not exist"));
     }
 }

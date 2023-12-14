@@ -96,6 +96,8 @@ resource.
 
 ## `TODO` Find out how to deal with nested resources
 
+## `TODO` Try to rewrite the endpoints to enhance code quality
+
 # Resources
 
 1. https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design

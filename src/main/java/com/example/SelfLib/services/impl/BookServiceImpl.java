@@ -15,6 +15,7 @@ public class BookServiceImpl implements BookService {
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
+
     @Override
     public List<BookEntity> listBooks(Long authorId) {
         return bookRepository.findByAuthorEntity_Id(authorId);

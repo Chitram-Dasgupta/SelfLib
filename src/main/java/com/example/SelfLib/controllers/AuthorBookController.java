@@ -26,6 +26,7 @@ public class AuthorBookController {
         this.authorService = authorService;
         this.entityDtoMapper = entityDtoMapper;
     }
+
     @GetMapping("/")
     public ResponseEntity<List<BookDto>> listBooks(@PathVariable("authorId") Long authorId) {
         Optional<AuthorEntity> foundAuthor = authorService.findOne(authorId);

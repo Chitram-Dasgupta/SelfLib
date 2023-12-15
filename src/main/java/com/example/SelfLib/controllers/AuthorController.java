@@ -49,31 +49,37 @@ public class AuthorController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AuthorDto> fullUpdateAuthor(@PathVariable("id") Long id, @Valid @RequestBody AuthorDto authorDto) {
-        if (!authorService.exists(id)) {
+        Optional<AuthorEntity> foundAuthor = authorService.findOne(id);
+
+        if (foundAuthor.isPresent()) {
+            AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
+            AuthorEntity updatedAuthorEntity = authorService.save(authorEntity);
+
+            return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
-        AuthorEntity updatedAuthorEntity = authorService.save(authorEntity);
-
-        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<AuthorDto> partialUpdateAuthor(@PathVariable("id") Long id, @Valid @RequestBody AuthorDto authorDto) {
-        if (!authorService.exists(id)) {
+        Optional<AuthorEntity> foundAuthor = authorService.findOne(id);
+
+        if (foundAuthor.isPresent()) {
+            AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
+            authorEntity.setId(id);
+            AuthorEntity updatedAuthorEntity = authorService.partialUpdate(authorEntity);
+
+            return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        AuthorEntity authorEntity = entityDtoMapper.authorDtoToEntity(authorDto);
-        authorEntity.setId(id);
-        AuthorEntity updatedAuthorEntity = authorService.partialUpdate(authorEntity);
-        return new ResponseEntity<>(entityDtoMapper.authorEntityToDto(updatedAuthorEntity), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteAuthor(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteAuthor(@PathVariable("id") Long id) {
         authorService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.noContent().build();
     }
 }

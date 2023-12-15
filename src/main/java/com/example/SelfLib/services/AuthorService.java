@@ -12,8 +12,6 @@ public interface AuthorService {
 
     AuthorEntity save(AuthorEntity authorEntity);
 
-    boolean exists(Long id);
-
     AuthorEntity partialUpdate(AuthorEntity authorEntity);
 
     void delete(Long id);

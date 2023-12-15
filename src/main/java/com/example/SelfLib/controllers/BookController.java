@@ -74,8 +74,8 @@ public class BookController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity deleteBook(@PathVariable("isbn") String isbn) {
+    public ResponseEntity<?> deleteBook(@PathVariable("isbn") String isbn) {
         bookService.delete(isbn);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.noContent().build();
     }
 }

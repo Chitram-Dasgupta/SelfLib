@@ -20,7 +20,7 @@ public class BookEntity {
     @NotBlank
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "author_id")
     private AuthorEntity authorEntity;
 }

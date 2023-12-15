@@ -35,11 +35,6 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean exists(Long id) {
-        return authorRepository.existsById(id);
-    }
-
-    @Override
     public AuthorEntity partialUpdate(AuthorEntity authorEntity) {
         return authorRepository.findById(authorEntity.getId()).map(author -> {
             Optional.ofNullable(authorEntity.getName()).ifPresent(author::setName);
